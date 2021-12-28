@@ -10,8 +10,8 @@ spec:
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 5001
-  type: NodePort
+    targetPort: 80
+  type: ClusterIP
 
 ---
 apiVersion: apps/v1
@@ -21,7 +21,7 @@ metadata:
   labels:
     app: products-api
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: products-api
@@ -32,11 +32,11 @@ spec:
       annotations:
         dapr.io/enabled: "true"
         dapr.io/app-id: "products-api"
-        dapr.io/app-port: "5001"
+        dapr.io/app-port: "80"
     spec:
       containers:
       - name: products-api-pod
-        image: us-docker.pkg.dev/hellogcp-336107/hello-gcp-app/productsapi:v0
+        image: chhandakdey/productsapi:v0
         ports:
-        - containerPort: 5001
+        - containerPort: 80
         imagePullPolicy: Always

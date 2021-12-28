@@ -11,8 +11,7 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-    nodePort: 30005
-  type: NodePort
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
@@ -37,7 +36,7 @@ spec:
     spec:
       containers:
       - name: products-app-pod
-        image: chhandakdey/productsapp:v0
+        image: us-docker.pkg.dev/hellogcp-336107/hello-gcp-app/productsapp:v0
         ports:
         - containerPort: 80
         imagePullPolicy: Always

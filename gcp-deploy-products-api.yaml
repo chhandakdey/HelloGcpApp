@@ -1,43 +1,42 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: products-app-service
+  name: products-api-service
   labels:
-    app: products-app
+    app: products-api
 spec:
   selector:
-    app: products-app
+    app: products-api
   ports:
   - protocol: TCP
     port: 80
     targetPort: 80
-    nodePort: 30005
-  type: NodePort
+  type: ClusterIP
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: products-app-deployment
+  name: products-api-deployment
   labels:
-    app: products-app
+    app: products-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: products-app
+      app: products-api
   template:
     metadata:
       labels:
-        app: products-app
+        app: products-api
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "products-app"
+        dapr.io/app-id: "products-api"
         dapr.io/app-port: "80"
     spec:
       containers:
-      - name: products-app-pod
-        image: chhandakdey/productsapp:v0
+      - name: products-api-pod
+        image: us-docker.pkg.dev/hellogcp-336107/hello-gcp-app/productsapi:v0
         ports:
         - containerPort: 80
         imagePullPolicy: Always

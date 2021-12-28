@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{558D8A
 	ProjectSection(SolutionItems) = preProject
 		deploy-products-api.yaml = deploy-products-api.yaml
 		deploy-products-app.yaml = deploy-products-app.yaml
+		gcp-deploy-products-api.yaml = gcp-deploy-products-api.yaml
+		gcp-deploy-products-app.yaml = gcp-deploy-products-app.yaml
 	EndProjectSection
 EndProject
 Global
