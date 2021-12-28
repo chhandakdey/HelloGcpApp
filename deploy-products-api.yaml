@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: products-api-service
+  labels:
+    app: products-api
+spec:
+  selector:
+    app: products-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5001
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: products-api-deployment
+  labels:
+    app: products-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: products-api
+  template:
+    metadata:
+      labels:
+        app: products-api
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "products-api"
+        dapr.io/app-port: "5001"
+    spec:
+      containers:
+      - name: products-api-pod
+        image: us-docker.pkg.dev/hellogcp-336107/hello-gcp-app/productsapi:v0
+        ports:
+        - containerPort: 5001
+        imagePullPolicy: Always
